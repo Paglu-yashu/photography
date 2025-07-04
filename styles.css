@@ -1,0 +1,22 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #121212;
+    color: #ffffff;
+}
+
+.hero {
+    text-align: center;
+    padding: 50px;
+}
+
+.gallery img {
+    width: 100%;
+    height: auto;
+    transition: transform 0.2s;
+}
+
+.gallery img:hover {
+    transform: scale(1.05);
+}
+
+/* Add more styles as needed */

@@ -1,13 +1,18 @@
-RewriteEngine On
-RewriteBase /photography-portfolio/
+Options -Indexes
+DirectoryIndex index.php
 
-# Stop processing if file/directory exists
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-
-# Prevent redirect loops
-RewriteCond %{ENV:REDIRECT_STATUS} ^$
-RewriteRule ^admin/dashboard\.php$ - [L]
-
-# Handle other requests
-RewriteRule ^(.*)$ index.php?url=$1 [QSA,L]
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    
+    # Prevent direct access to includes
+    RewriteRule ^includes/ - [F,L]
+    
+    # Redirect to https if not localhost
+    RewriteCond %{HTTPS} off
+    RewriteCond %{HTTP_HOST} !^localhost
+    RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+    
+    # Handle authorization header
+    RewriteCond %{HTTP:Authorization} .
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+</IfModule>
