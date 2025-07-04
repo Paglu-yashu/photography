@@ -1,0 +1,13 @@
+RewriteEngine On
+RewriteBase /photography-portfolio/
+
+# Stop processing if file/directory exists
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Prevent redirect loops
+RewriteCond %{ENV:REDIRECT_STATUS} ^$
+RewriteRule ^admin/dashboard\.php$ - [L]
+
+# Handle other requests
+RewriteRule ^(.*)$ index.php?url=$1 [QSA,L]
